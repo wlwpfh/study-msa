@@ -1,6 +1,5 @@
-package org.example.gatewayapi.config;
+package org.example.gatewayapi.filter;
 
-import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -26,7 +25,7 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
             log.info("Custom PRE filter: request id : {}", request.getId());
 
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                log.info("Custom POST filter: request id : {}", response.getStatusCode());
+                log.info("Custom POST filter: response code : {}", response.getStatusCode());
             }));
         });
     }

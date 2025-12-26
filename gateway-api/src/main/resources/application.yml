@@ -32,3 +32,9 @@ spring:
                 - AddRequestHeader=s-request, 2nd-request-header-by-yaml
                 - AddResponseHeader=s-response, 2nd-response-header-by-yaml
                 - CustomFilter
+          default-filters:
+            - name: GlobalFilter
+              args:
+                baseMessage: Spring Cloud Gateway WebFlux Global Filter
+                preLogger: true
+                postLogger: true
