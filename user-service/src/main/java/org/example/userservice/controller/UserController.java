@@ -43,8 +43,7 @@ public class UserController {
     @GetMapping("/welcome")
     public String welcome(HttpServletRequest request) {
 
-//        return env.getProperty("greeting.message");
-        return greeting.getMessage();
+        return env.getProperty("greeting.message");
     }
 
     @PostMapping("/users")
