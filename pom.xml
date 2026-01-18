@@ -23,6 +23,7 @@
         <module>gateway-api</module>
         <module>user-service</module>
         <module>catalog-service</module>
+        <module>order-service</module>
     </modules>
 
 </project>
