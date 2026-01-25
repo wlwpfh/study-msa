@@ -16,4 +16,8 @@ public class UserDto {
 
     private String encryptedPwd;
     private List<ResponseOrder> orders;
+
+    public String getUserId(){
+        return this.userId;
+    }
 }

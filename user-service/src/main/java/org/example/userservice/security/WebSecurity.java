@@ -39,7 +39,8 @@ public class WebSecurity {
                         auth -> auth.requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/**")
                                 .access(new WebExpressionAuthorizationManager(
-                                        "hasIpAddress('127.0.0.1') or hasIpAddress('::1')")).anyRequest().authenticated())
+                                        "hasIpAddress('127.0.0.1') or hasIpAddress('::1') or " +
+                                                "hasIpAddress('192.168.219.255') or hasIpAddress('::1')")).anyRequest().authenticated())
                 .authenticationManager(authenticationManager)
                 .addFilter(getAuthenticationFilter(authenticationManager)).httpBasic(Customizer.withDefaults()) // for basic authentication
                 .headers((header) -> header.frameOptions((frameOptions) -> frameOptions.sameOrigin()));
@@ -48,7 +49,7 @@ public class WebSecurity {
     }
 
     private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(userService, env, authenticationManager);
         authenticationFilter.setAuthenticationManager(authenticationManager);
         return authenticationFilter;
     }
