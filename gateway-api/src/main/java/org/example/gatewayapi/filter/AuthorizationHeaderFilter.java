@@ -36,7 +36,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         return ((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
 
-            if (request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+            if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                 return onError(exchange, "no authorization header", HttpStatus.UNAUTHORIZED);
             }
 
@@ -51,7 +51,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     public static class Config {
-
+//eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NGQxODE4MS02OGU3LTQ0MTEtYjFhYi0yNzE1MmM4YzBjZTMiLCJleHAiOjE3Njk2ODQ0ODcsImlhdCI6MTc2OTU5ODA4N30.ZWTmmviYrCyZNo7bIXKibANHvzrTRno2g7epfjHbay4
     }
 
     private Mono<Void> onError(ServerWebExchange exchange, String message, HttpStatus status) {
@@ -77,7 +77,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         } catch (Exception e) {
             returnValue = false;
         }
-        if(subject == null || subject.isEmpty()){} {
+        if(subject == null || subject.isEmpty()) {
             returnValue = false;
         }
         return returnValue;
