@@ -22,6 +22,10 @@ spring:
     user:
       name: user
       password: $2a$10$SE2LM01xn1R8oh5AkFJMtO0mmxLczOIZ8dmIFhOwtXLyNNB1MljlG
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      name: ecommerce
 
 eureka:
   instance:

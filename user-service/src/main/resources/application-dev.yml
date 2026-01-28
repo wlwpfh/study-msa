@@ -18,6 +18,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      name: ecommerce
 
 eureka:
   instance:
