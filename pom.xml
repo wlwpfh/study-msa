@@ -24,7 +24,7 @@
         <module>user-service</module>
         <module>catalog-service</module>
         <module>order-service</module>
-        <module>config-service</module>
+        <module>config-service-</module>
     </modules>
 
 </project>
