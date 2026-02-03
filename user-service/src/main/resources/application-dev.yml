@@ -35,4 +35,4 @@ eureka:
     register-with-eureka: true
 
 greeting:
-  message: Welcome to the Sim0ple E-commerce.
+  message: Welcome to the Simple E-commerce. (dev profile)
