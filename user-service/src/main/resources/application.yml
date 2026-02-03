@@ -28,6 +28,8 @@ spring:
     config:
       uri: http://127.0.0.1:8888
       name: ecommerce
+#  profiles:
+#    active: dev
 
 eureka:
   instance:
@@ -39,10 +41,7 @@ eureka:
     register-with-eureka: true
 
 greeting:
-  message: Welcome to the Simple E-commerce - 2nd.
-token:
-  secret: my-very-long-secret-key-1234567890123456
-  expiration-time: 86400000 # 10 days
+  message: Welcome to the Simple E-commerce (spring boot)
 
 management:
   endpoints:
