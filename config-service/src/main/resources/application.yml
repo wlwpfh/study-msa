@@ -8,5 +8,5 @@ spring:
     config:
       server:
         git: #default
-          uri: file:///Users/wlwpfh/Desktop/git-config-file
+          uri: http://github.com/joneconsulting/spring-cloud-config
           default-label: master
