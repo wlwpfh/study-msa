@@ -42,7 +42,8 @@ public class WebSecurity {
                                 .requestMatchers("/**")
                                 .access(new WebExpressionAuthorizationManager(
                                         "hasIpAddress('127.0.0.1') or hasIpAddress('::1') or " +
-                                                "hasIpAddress('192.168.219.139') or hasIpAddress('::1')")).anyRequest().authenticated())
+                                                "hasIpAddress('192.168.219.139') or hasIpAddress('::1') or " +
+                                                "hasIpAddress('172.30.1.27')")).anyRequest().authenticated())
                 .authenticationManager(authenticationManager)
                 .addFilter(getAuthenticationFilter(authenticationManager)).httpBasic(Customizer.withDefaults()) // for basic authentication
                 .headers((header) -> header.frameOptions((frameOptions) -> frameOptions.sameOrigin()));
