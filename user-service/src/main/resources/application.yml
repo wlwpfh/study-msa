@@ -30,6 +30,12 @@ spring:
       name: ecommerce
   profiles:
     active: dev
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    stream:
+      username: guest
+      password: guest
 
 eureka:
   instance:
@@ -52,3 +58,5 @@ management:
           - health
           - beans
           - info
+          - httptrace
+          - busrefresh

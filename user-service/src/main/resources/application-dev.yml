@@ -22,6 +22,12 @@ spring:
     config:
       uri: http://127.0.0.1:8888
       name: ecommerce
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    stream:
+      username: guest
+      password: guest
 
 eureka:
   instance:
@@ -36,3 +42,15 @@ eureka:
 
 greeting:
   message: Welcome to the Simple E-commerce. (dev profile)
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - refresh
+          - health
+          - beans
+          - info
+          - httptrace
+          - busrefresh
