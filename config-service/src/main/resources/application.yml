@@ -16,3 +16,17 @@ spring:
         git: #default
           uri: http://github.com/joneconsulting/spring-cloud-config
           default-label: master
+        native:
+          search-locations: file://${user.home}/Desktop/git-config-file
+  profiles:
+    active: native
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - refresh
+          - health
+          - beans
+          - info
+          - busrefresh

@@ -12,11 +12,6 @@ spring:
       settings:
         web-allow-others: true
       path: /h2-console
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;
-    username: sa
-    password:
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,12 +19,12 @@ spring:
     user:
       name: user
       password: $2a$10$SE2LM01xn1R8oh5AkFJMtO0mmxLczOIZ8dmIFhOwtXLyNNB1MljlG
-  cloud:
-    config:
-      uri: http://127.0.0.1:8888
-      name: ecommerce
-  profiles:
-    active: dev
+#  cloud:
+#    config:
+#      uri: http://127.0.0.1:8888
+#      name: ecommerce
+#  profiles:
+#    active: dev
   rabbitmq:
     host: 127.0.0.1
     port: 5672
