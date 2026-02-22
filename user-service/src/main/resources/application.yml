@@ -55,3 +55,8 @@ management:
           - info
           - httptrace
           - busrefresh
+
+logging:
+  level:
+    org.example.userservice.client: DEBUG
+    org.springframework.security: DEBUG
