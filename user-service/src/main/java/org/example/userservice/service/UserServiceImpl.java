@@ -63,8 +63,6 @@ public class UserServiceImpl implements UserService {
         }
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
-        String orderUrl = String.format(env.getProperty("order-service.url"), userId);
-        System.out.println(orderUrl);
         ResponseEntity<List<ResponseOrder>> orderListResponse = restTemplate.exchange(orderUrl, HttpMethod.GET, null,
                 new ParameterizedTypeReference<>() {
                 });
