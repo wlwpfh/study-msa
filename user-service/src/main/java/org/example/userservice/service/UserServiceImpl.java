@@ -7,12 +7,16 @@ import org.example.userservice.jpa.UserRepository;
 import org.example.userservice.vo.ResponseOrder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +29,13 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     BCryptPasswordEncoder passwordEncoder;
+    RestTemplate restTemplate;
 
-    public UserServiceImpl(Environment env, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(Environment env, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RestTemplate restTemplate) {
         this.env = env;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -57,9 +63,12 @@ public class UserServiceImpl implements UserService {
         }
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
-
-        // 추후에 order를 가져와서 값을 채운다.
-        List<ResponseOrder> orderList = new ArrayList<>();
+        String orderUrl = String.format(env.getProperty("order-service.url"), userId);
+        System.out.println(orderUrl);
+        ResponseEntity<List<ResponseOrder>> orderListResponse = restTemplate.exchange(orderUrl, HttpMethod.GET, null,
+                new ParameterizedTypeReference<>() {
+                });
+        List<ResponseOrder> orderList = orderListResponse.getBody();
         userDto.setOrders(orderList);
 
         return userDto;

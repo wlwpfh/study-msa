@@ -45,7 +45,8 @@ public class UserController {
                 + ", welcome message " + env.getProperty("greeting.message")
                 + ", gateway ip(env)= " + env.getProperty("gateway.api")
                 + ", token secret key= " + env.getProperty("token.secret")
-                + ", token expiration time= " + env.getProperty("token.expiration-time"));
+                + ", token expiration time= " + env.getProperty("token.expiration-time")
+                + ", order-serivce.url = " + String.format(env.getProperty("order-service.url"), "a"));
     }
 
     @GetMapping("/welcome")
