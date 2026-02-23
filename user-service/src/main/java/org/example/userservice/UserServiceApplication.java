@@ -1,6 +1,7 @@
 package org.example.userservice;
 
 import feign.Logger;
+import org.example.userservice.error.FeignErrorDecoder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
