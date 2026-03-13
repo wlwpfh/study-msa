@@ -2,6 +2,7 @@ package org.example.orderservice.controller;
 
 import org.example.orderservice.dto.OrderDto;
 import org.example.orderservice.jpa.OrderEntity;
+import org.example.orderservice.message.KafkaProducer;
 import org.example.orderservice.service.OrderService;
 import org.example.orderservice.vo.RequestOrder;
 import org.example.orderservice.vo.ResponseOrder;
@@ -22,12 +23,14 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/order-service")
 public class OrderController {
     private Environment env;
-    private OrderService orderSerivce;
+    private OrderService orderService;
+    private KafkaProducer kafkaProducer;
 
     @Autowired
-    public OrderController(Environment env, OrderService orderSerivce) {
+    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer) {
         this.env = env;
-        this.orderSerivce = orderSerivce;
+        this.orderService = orderService;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @GetMapping("/health-check")
@@ -45,14 +48,14 @@ public class OrderController {
         OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
 
-        OrderDto createdOrder = orderSerivce.createOrder(orderDto);
+        OrderDto createdOrder = orderService.createOrder(orderDto);
         ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
         return ResponseEntity.status(CREATED).body(responseOrder);
     }
 
     @GetMapping("/{userId}/orders")
     public ResponseEntity<List<ResponseOrder>> getOrder(@PathVariable("userId") String userId) throws Exception {
-        Iterable<OrderEntity> orderList = orderSerivce.getOrdersByUserId(userId);
+        Iterable<OrderEntity> orderList = orderService.getOrdersByUserId(userId);
 
         List<ResponseOrder> response = new ArrayList<>();
         orderList.forEach(v -> {
