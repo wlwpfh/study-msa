@@ -50,6 +50,10 @@ public class OrderController {
 
         OrderDto createdOrder = orderService.createOrder(orderDto);
         ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
+
+        /* send this order */
+        kafkaProducer.send("example-catalog-topic", orderDto);
+
         return ResponseEntity.status(CREATED).body(responseOrder);
     }
 

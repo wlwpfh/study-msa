@@ -32,7 +32,6 @@
         </processorPath>
         <module name="first-service" />
         <module name="gateway-api" />
-        <module name="order-service" />
         <module name="user-service" />
         <module name="catalog-service" />
       </profile>
