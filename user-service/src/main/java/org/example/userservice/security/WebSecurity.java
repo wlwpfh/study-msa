@@ -44,6 +44,7 @@ public class WebSecurity {
                                         "hasIpAddress('127.0.0.1') or hasIpAddress('::1') or " +
                                                 "hasIpAddress('192.168.219.139') or hasIpAddress('::1') or " +
                                                 "hasIpAddress('172.30.101.210') or hasIpAddress('::1') or " +
+                                                "hasIpAddress('192.168.0.3') or " +
                                                 "hasIpAddress('192.168.219.141')")).anyRequest().authenticated())
                 .authenticationManager(authenticationManager)
                 .addFilter(getAuthenticationFilter(authenticationManager)).httpBasic(Customizer.withDefaults()) // for basic authentication

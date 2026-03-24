@@ -3,6 +3,7 @@ package org.example.orderservice.controller;
 import org.example.orderservice.dto.OrderDto;
 import org.example.orderservice.jpa.OrderEntity;
 import org.example.orderservice.message.KafkaProducer;
+import org.example.orderservice.message.OrderProducer;
 import org.example.orderservice.service.OrderService;
 import org.example.orderservice.vo.RequestOrder;
 import org.example.orderservice.vo.ResponseOrder;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.modelmapper.convention.MatchingStrategies.STRICT;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -25,12 +27,14 @@ public class OrderController {
     private Environment env;
     private OrderService orderService;
     private KafkaProducer kafkaProducer;
+    private OrderProducer orderProducer;
 
     @Autowired
-    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer) {
+    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer, OrderProducer orderProducer) {
         this.env = env;
         this.orderService = orderService;
         this.kafkaProducer = kafkaProducer;
+        this.orderProducer = orderProducer;
     }
 
     @GetMapping("/health-check")
@@ -48,11 +52,18 @@ public class OrderController {
         OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
 
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+        /* jpa */
+//        OrderDto createdOrder = orderService.createOrder(orderDto);
+//        ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
+
+        /* kafka */
+        orderDto.setOrderId(UUID.randomUUID().toString());
+        orderDto.setTotalPrice(orderDetails.getQty() * orderDetails.getUnitPrice());
         ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
 
         /* send this order */
         kafkaProducer.send("example-catalog-topic", orderDto);
+        orderProducer.send("orders", orderDto);
 
         return ResponseEntity.status(CREATED).body(responseOrder);
     }
